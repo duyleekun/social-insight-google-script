@@ -19,10 +19,14 @@ function gasPlugin() {
 
         // Return the transformed code
         return {
-          code: transformedCode,
+          // code: transformedCode,
+          code: code,
           map: null
         };
       }
+    },
+    buildEnd() {
+      console.log('buildEnd');
     }
   };
 };
@@ -30,24 +34,23 @@ function gasPlugin() {
 export default defineConfig({
 
   plugins: [vue(), vueJsx(), viteSingleFile()],
-  root: './src/vue_sidebar/',
+  root: fileURLToPath(new URL('./', import.meta.url)),
   build: {
     cssCodeSplit: false,
     assetsInlineLimit: 100000000,
     minify: false,
+    emptyOutDir: false,
     rollupOptions: {
-      input: fileURLToPath(new URL('./src/vue_sidebar/vue_sidebar.html', import.meta.url)),
+      input: fileURLToPath(new URL('./vue_sidebar.html', import.meta.url)),
       output: {
-        dir: 'dist',
-        entryFileNames: '[name].js',
-        assetFileNames: '[name][extname]'
+        dir: fileURLToPath(new URL('../../dist', import.meta.url)),
       },
     },
   },
 
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src/vue_sidebar/src/', import.meta.url))
+      '@': fileURLToPath(new URL('./src/', import.meta.url))
     }
   }
 })

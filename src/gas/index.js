@@ -1,14 +1,16 @@
-import { getGmailAliases, getGmailLabels } from './gmail';
-import { sendmail } from './server/mail';
-import { doGet } from './server/webapp';
-import { writeFacebookPagesInsights } from './sidebar';
-global.sendmail = sendmail;
+import { getGmailAliases as localGetGmailAliases, getGmailLabels as localGetGmailLabels } from './gmail';
+import { sendmail as localSendMail } from './server/mail';
+import { doGet as localDoGet } from './server/webapp';
+import { writeFacebookPagesInsights as localWriteFacebookPagesInsights } from './sidebar';
 
-global.doGet = doGet;
+const global = this;
+global.sendmail = localSendMail;
 
-global.getGmailLabels = getGmailLabels;
-global.getGmailAliases = getGmailAliases;
-global.writeFacebookPagesInsights = writeFacebookPagesInsights;
+global.doGet = localDoGet;
+
+global.getGmailLabels = localGetGmailLabels;
+global.getGmailAliases = localGetGmailAliases;
+global.writeFacebookPagesInsights = localWriteFacebookPagesInsights;
 
 global.showHelp = () => {
   Browser.msgBox('Develop Google Apps Script project locally inside VS Code');
