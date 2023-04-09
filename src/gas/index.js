@@ -34,7 +34,7 @@ global.onOpen = () => {
 };
 
 global.showSidebar = () => {
-  const ui = HtmlService.createTemplateFromFile('gas_sidebar')
+  const ui = HtmlService.createTemplateFromFile('vue_sidebar')
     .evaluate()
     .setTitle('Facebook Insight')
     .setSandboxMode(HtmlService.SandboxMode.IFRAME);
