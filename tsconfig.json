@@ -1,0 +1,18 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.ts"],
+  "compilerOptions": {
+    "baseUrl": "./src/vue_sidebar",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": ["@types/facebook-js-sdk","@types/google-apps-script","./src/vue_sidebar/src/types/gas.d.ts"],
+  },
+
+
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}
