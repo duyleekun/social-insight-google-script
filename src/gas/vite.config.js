@@ -13,7 +13,7 @@ function gasPlugin() {
       // Check if file is a JavaScript file
       if (id.endsWith('.js')) {
         const transformedCode = `${generate(code).entryPointFunctions}${code}`;
-        console.log(transformedCode)
+        // console.log(transformedCode)
         // Return the transformed code
         return {
           code: transformedCode,

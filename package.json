@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "@types/facebook-js-sdk": "^3.3.6",
+    "@types/google-apps-script": "^1.0.59",
     "apps-script-oauth2": "github:googleworkspace/apps-script-oauth2",
     "gas-entry-generator": "^2.2.0",
     "pinia": "^2.0.32",
