@@ -1,3 +1,4 @@
+import type { FacebookDataResponse } from "../../env";
 
 let fbPromise : Promise<fb.FacebookStatic>;
 export function getFacebookSDK()  {
@@ -22,40 +23,6 @@ export function getFacebookSDK()  {
   });
 
   return fbPromise;
-}
-
-interface FacebookAuthResponse {
-  status: string;
-  authResponse: {
-    accessToken: string;
-    expiresIn: string;
-    signedRequest: string;
-    userID: string;
-  };
-}
-
-interface FacebookDataResponse<T> {
-  data: Array<T>;
-  paging?: {
-    cursors?: {
-      before?: string;
-      after?: string;
-    }
-    previous?: string;
-    next?: string;
-  };
-}
-
-export interface FacebookAccount {
-  id: string;
-  name: string;
-  access_token: string;
-  category: string;
-  category_list: Array<{
-    id: string;
-    name: string;
-  }>;
-  tasks: Array<string>;
 }
 
 // fb api promise

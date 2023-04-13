@@ -36,7 +36,7 @@ export function writeFacebookPagesInsights(facebookAccount, metrics, period='day
   console.log('writeFacebookPagesInsights',arguments)
   const insightsData = [];
   const accessToken = facebookAccount.access_token;
-  let data = {}
+  let data : FacebookDataResponse<any>
   let url = `https://graph.facebook.com/v16.0/${facebookAccount.id}/insights?metric=${metrics.join(',')}&period=${period}&date_preset=${date_preset}`
   let page = 0
   do {

@@ -1,14 +1,12 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.ts"],
+  "include": ["./env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.ts"],
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["@types/facebook-js-sdk","@types/google-apps-script","./src/types/gas.d.ts"],
+    "types": ["@types/facebook-js-sdk","@types/google-apps-script","./env.d.ts"],
   },
-
-
   "references": [
     {
       "path": "./tsconfig.node.json"
