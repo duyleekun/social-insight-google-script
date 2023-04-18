@@ -1,4 +1,4 @@
-import type { FacebookDataResponse } from "../../env";
+import type { FacebookDataResponse } from "../../../common/env";
 
 let fbPromise : Promise<fb.FacebookStatic>;
 export function getFacebookSDK()  {
