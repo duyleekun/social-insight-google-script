@@ -1,7 +1,8 @@
 import { getGmailAliases as localGetGmailAliases, getGmailLabels as localGetGmailLabels } from './gmail';
 import { sendmail as localSendMail } from './server/mail';
 import { doGet as localDoGet } from './server/webapp';
-import { writeFacebookPagesInsights as localWriteFacebookPagesInsights } from './sidebar';
+import { writeFacebookPagesInsights as localWriteFacebookPagesInsights } from './sheet/fb_page';
+import { writeFacebookPostsWithLifetimeInsights as localWriteFacebookPostsWithLifetimeInsights } from './sheet/fb_video';
 
 const global = this;
 global.sendmail = localSendMail;
@@ -11,6 +12,8 @@ global.doGet = localDoGet;
 global.getGmailLabels = localGetGmailLabels;
 global.getGmailAliases = localGetGmailAliases;
 global.writeFacebookPagesInsights = localWriteFacebookPagesInsights;
+global.writeFacebookPostsWithLifetimeInsights = localWriteFacebookPostsWithLifetimeInsights;
+
 
 global.showHelp = () => {
   Browser.msgBox('Develop Google Apps Script project locally inside VS Code');
@@ -22,7 +25,7 @@ global.showCredits = () => {
 global.onOpen = () => {
   try {
     SpreadsheetApp.getUi()
-      .createMenu("Facebook Insight")
+      .createMenu('Facebook Insight')
       .addItem('Show sidebar', 'showSidebar')
       // .addItem('Help', 'showHelp')
       // .addSeparator()

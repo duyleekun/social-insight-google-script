@@ -11,12 +11,6 @@ export interface FacebookDataResponse<T> {
     };
 }
 
-export interface FacebookInsightResponse extends FacebookDataResponse<{
-    values: any[]
-    name: string
-}> {
-
-}
 
 export interface FacebookAuthResponse {
     status: string;
