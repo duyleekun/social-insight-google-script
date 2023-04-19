@@ -1,10 +1,12 @@
 import URLFetchRequest = GoogleAppsScript.URL_Fetch.URLFetchRequest;
 
+type UrlQuery = {[k in string]: string|number|boolean}
 interface MyCommonRequest {
     url: string
     body?: any,
     method?: 'get' | 'post',
-    headers?
+    headers?,
+    query? : UrlQuery
 }
 
 function buildPostRequest(request: MyCommonRequest): URLFetchRequest {
@@ -17,8 +19,11 @@ function buildPostRequest(request: MyCommonRequest): URLFetchRequest {
     if (accessToken) {
         headers['Authorization'] = `Bearer ${accessToken}`
     }
-
-    const builtRequest = UrlFetchApp.getRequest(request.url, {
+    let url = request.url
+    if (request.query) {
+        url = makeQueryString(url, request.query)
+    }
+    const builtRequest = UrlFetchApp.getRequest(url, {
         method: request.method || (request.body ? 'post' : 'get'),
         payload: JSON.stringify(request.body),
         headers: headers,
@@ -42,3 +47,10 @@ export function fetchAllJson(requests: MyCommonRequest[]) {
         return JSON.parse(json)
     })
 }
+
+const makeQueryString = (url, params : UrlQuery = {}) => {
+    const paramString = Object.keys(params)
+        .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+        .join('&');
+    return url + (url.indexOf('?') >= 0 ? '&' : '?') + paramString;
+};
