@@ -2,10 +2,9 @@
  * Opens a sidebar. The sidebar structure is described in the Sidebar.html
  * project file.
  */
-import { fetchJson } from '@/sheet/api';
-import { writeToSheet } from '@/sheet/sheet_util';
+import { fetchJson } from '@/lib/api';
+import { writeToSheet } from '@/lib/sheet_util';
 import { FacebookAccount, FacebookDataResponse } from '../../common/env';
-import { flattenObject } from '@/sheet/object_util';
 
 class MyPreProcessedInsightType {
   date: string;
@@ -82,6 +81,6 @@ export function writeFacebookPagesInsights(facebookAccounts: FacebookAccount[], 
     all[ele.getKey()][metric_type] = value;
     return all;
   }, [] as MyProcessedInsightType[]);
-  writeToSheet('Facebook Pages', Object.values(processedMetricType));
+  writeToSheet('fb_page_insight', Object.values(processedMetricType));
 }
 

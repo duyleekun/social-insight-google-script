@@ -1,7 +1,7 @@
 import { getGmailAliases as localGetGmailAliases, getGmailLabels as localGetGmailLabels } from './gmail';
 import { sendmail as localSendMail } from './server/mail';
 import { doGet as localDoGet } from './server/webapp';
-import { writeFacebookPagesInsights as localWriteFacebookPagesInsights } from './sheet/fb_page';
+import { writeFacebookPagesInsights as localWriteFacebookPagesInsights } from './sheet/fb_page_insight';
 import { writeFacebookPostsWithLifetimeInsights as localWriteFacebookPostsWithLifetimeInsights } from './sheet/fb_video';
 
 const global = this;

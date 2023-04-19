@@ -1,7 +1,7 @@
 import { FacebookAccount, FacebookDataResponse } from '../../common/env';
-import { fetchJson } from '@/sheet/api';
-import { flattenObject } from '@/sheet/object_util';
-import { writeToSheet } from '@/sheet/sheet_util';
+import { fetchJson } from '@/lib/api';
+import { flattenObject } from '@/lib/object_util';
+import { writeToSheet } from '@/lib/sheet_util';
 
 
 interface FacebookVideoWithLifetimeInsights {
@@ -88,5 +88,5 @@ export function writeFacebookPostsWithLifetimeInsights(facebookAccounts: Faceboo
   const facebookPostsWithLifetimeInsights = facebookAccounts.map(facebookAccount => {
     return getFacebookVideosWithLifetimeInsights(facebookAccount, limit);
   }).flat()
-  writeToSheet('videos', facebookPostsWithLifetimeInsights);
+  writeToSheet('fb_video', facebookPostsWithLifetimeInsights);
 }
