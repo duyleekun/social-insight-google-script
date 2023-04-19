@@ -27,3 +27,9 @@ export function flattenObject(obj: any, parentKey = ''): FlattenedObject {
 
   return result;
 }
+
+export function mapToArray(inputMap: {[k in string]: number}, keyExtractor: (k:string) => {[k in string]: any}) {
+  return Object.keys(inputMap).map(key => {
+    return {...keyExtractor(key),value: inputMap[key]}
+  })
+}

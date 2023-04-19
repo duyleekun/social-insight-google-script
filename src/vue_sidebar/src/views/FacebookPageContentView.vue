@@ -1,15 +1,19 @@
 <template>
   <div class="facebook">
     <h1>This is an facebook post insight</h1>
+    <input type="number" v-model="limit"/>
     <button @click="writeAllToSheet">Write to sheet</button>
   </div>
 </template>
 
 <script setup lang='ts'>
 import type {FacebookAccount} from "../../../common/env";
+import {ref} from "vue";
 const props = defineProps<{
   selectedFacebookAccounts: FacebookAccount[];
 }>();
+
+const limit = ref(10)
 
 async function writeAllToSheet() {
   return new Promise((resolve, reject)=> {
@@ -22,7 +26,7 @@ async function writeAllToSheet() {
         console.error('error', error);
         reject(error)
       })
-      .writeFacebookPostsWithLifetimeInsights(props.selectedFacebookAccounts)
+      .writeFacebookPostsWithLifetimeInsights(props.selectedFacebookAccounts, limit.value)
   })
 }
 
