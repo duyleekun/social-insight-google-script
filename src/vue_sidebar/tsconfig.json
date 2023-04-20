@@ -6,7 +6,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-//    "types": ["@types/facebook-js-sdk","@types/google-apps-script","./env.d.ts"],
+    "types": ["@types/facebook-js-sdk","@types/google-apps-script"],
   },
   "references": [
     {
