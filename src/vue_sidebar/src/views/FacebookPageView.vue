@@ -16,6 +16,9 @@
         },{
           routeName: 'facebook-page-video-insight',
           displayName: 'Video Insight'
+        },{
+          routeName: 'facebook-page-reel-insight',
+          displayName: 'Reel Insight'
         }]" />
       <RouterView :selectedFacebookAccounts='selectedFacebookAccounts' />
     </template>

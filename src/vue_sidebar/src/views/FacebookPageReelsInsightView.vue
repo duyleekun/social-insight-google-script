@@ -1,6 +1,6 @@
 <template>
   <div class="facebook">
-    <h1>This is an facebook post insight</h1>
+    <h1>This is an facebook reel insight</h1>
     <input type="number" v-model="limit"/>
     <button @click="writeAllToSheet">Write to sheet</button>
   </div>
@@ -13,7 +13,7 @@ const props = defineProps<{
   selectedFacebookAccounts: FacebookAccount[];
 }>();
 
-const limit = ref(10)
+const limit = ref(100)
 
 async function writeAllToSheet() {
   return new Promise((resolve, reject)=> {
@@ -26,7 +26,7 @@ async function writeAllToSheet() {
         console.error('error', error);
         reject(error)
       })
-      .writeFacebookPostsWithLifetimeInsights(props.selectedFacebookAccounts, limit.value)
+      .writeFacebookReelsWithLifetimeInsights(props.selectedFacebookAccounts, limit.value)
   })
 }
 
