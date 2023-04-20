@@ -1,18 +1,20 @@
-import { getGmailAliases as localGetGmailAliases, getGmailLabels as localGetGmailLabels } from './gmail';
-import { sendmail as localSendMail } from './server/mail';
-import { doGet as localDoGet } from './server/webapp';
-import { writeFacebookPagesInsights as localWriteFacebookPagesInsights } from './sheet/fb_page_insight';
-import { writeFacebookPostsWithLifetimeInsights as localWriteFacebookPostsWithLifetimeInsights } from './sheet/fb_video';
+import { getGmailAliases as $getGmailAliases, getGmailLabels as $getGmailLabels } from './gmail';
+import { sendmail as $sendMail } from './server/mail';
+import { doGet as $doGet } from './server/webapp';
+import { writeFacebookPagesInsights as $writeFacebookPagesInsights } from './sheet/fb_page_insight';
+import { writeFacebookVideosWithLifetimeInsights as $writeFacebookVideosWithLifetimeInsights } from './sheet/fb_video';
+import { writeFacebookReelsWithLifetimeInsights as $writeFacebookReelsWithLifetimeInsights } from './sheet/fb_reel';
 
 const global = this;
-global.sendmail = localSendMail;
+global.sendmail = $sendMail;
 
-global.doGet = localDoGet;
+global.doGet = $doGet;
 
-global.getGmailLabels = localGetGmailLabels;
-global.getGmailAliases = localGetGmailAliases;
-global.writeFacebookPagesInsights = localWriteFacebookPagesInsights;
-global.writeFacebookPostsWithLifetimeInsights = localWriteFacebookPostsWithLifetimeInsights;
+global.getGmailLabels = $getGmailLabels;
+global.getGmailAliases = $getGmailAliases;
+global.writeFacebookPagesInsights = $writeFacebookPagesInsights;
+global.writeFacebookVideosWithLifetimeInsights = $writeFacebookVideosWithLifetimeInsights;
+global.writeFacebookReelsWithLifetimeInsights = $writeFacebookReelsWithLifetimeInsights;
 
 global.clearAll = () => {
   console.log('HAHA')
