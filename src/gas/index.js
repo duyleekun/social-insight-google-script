@@ -14,6 +14,16 @@ global.getGmailAliases = localGetGmailAliases;
 global.writeFacebookPagesInsights = localWriteFacebookPagesInsights;
 global.writeFacebookPostsWithLifetimeInsights = localWriteFacebookPostsWithLifetimeInsights;
 
+global.clearAll = () => {
+  console.log('HAHA')
+  console.log('SpreadsheetApp.getActiveSpreadsheet().getNamedRanges()',SpreadsheetApp.getActiveSpreadsheet().getNamedRanges())
+  SpreadsheetApp.getActiveSpreadsheet().getNamedRanges().map((nr)=> {
+    console.log(nr)
+    nr.remove()
+  })
+  console.log('HEHE')
+  SpreadsheetApp.getActiveSpreadsheet().getSheets().map((sheet)=> sheet.clear())
+}
 
 global.showHelp = () => {
   Browser.msgBox('Develop Google Apps Script project locally inside VS Code');
@@ -27,6 +37,7 @@ global.onOpen = () => {
     SpreadsheetApp.getUi()
       .createMenu('Facebook Insight')
       .addItem('Show sidebar', 'showSidebar')
+      .addItem('clearAll', 'clearAll')
       // .addItem('Help', 'showHelp')
       // .addSeparator()
       // .addItem('Credits', 'showCredits')
