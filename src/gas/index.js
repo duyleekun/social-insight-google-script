@@ -26,10 +26,10 @@ global.clearAll = () => {
 }
 
 global.showHelp = () => {
-  Browser.msgBox('Develop Google Apps Script project locally inside VS Code');
+  Browser.msgBox('Develop Google Apps Script project $ly inside VS Code');
 };
 global.showCredits = () => {
-  SpreadsheetApp.getActiveSpreadsheet().toast('Developed by Amit Agarwal @labnol');
+  SpreadsheetApp.getActiveSpreadsheet().toast('Developed by @duyleekun');
 };
 
 global.onOpen = () => {
