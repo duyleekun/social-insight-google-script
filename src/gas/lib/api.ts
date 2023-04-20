@@ -27,7 +27,7 @@ function buildPostRequest(request: MyCommonRequest): URLFetchRequest {
         method: request.method || (request.body ? 'post' : 'get'),
         payload: JSON.stringify(request.body),
         headers: headers,
-        muteHttpExceptions: false,
+        muteHttpExceptions: true,
     })
     delete (builtRequest.headers['X-Forwarded-For'])
     // console.log(builtRequest)
@@ -43,8 +43,11 @@ export function fetchAllJson(requests: MyCommonRequest[]) {
         return buildPostRequest(request)
     }));
     return responses.map((response) => {
-        const json = response.getContentText();
-        return JSON.parse(json)
+        const text = response.getContentText();
+        if (response.getResponseCode() >= 400) {
+            console.error(text)
+        }
+        return JSON.parse(text)
     })
 }
 
