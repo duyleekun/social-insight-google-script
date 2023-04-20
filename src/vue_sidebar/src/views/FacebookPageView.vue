@@ -12,10 +12,10 @@
 
       <NavList :items="[{
           routeName: 'facebook-page-insight',
-          displayName: 'Facebook Page insight'
+          displayName: 'Page Insight'
         },{
-          routeName: 'facebook-page-content',
-          displayName: 'Facebook Page content'
+          routeName: 'facebook-page-video-insight',
+          displayName: 'Video Insight'
         }]" />
       <RouterView :selectedFacebookAccounts='selectedFacebookAccounts' />
     </template>
@@ -30,8 +30,9 @@
 import NavList from '@/components/NavList.vue';
 import { ref, watchEffect } from 'vue';
 import { fbApiAll } from '@/lib/fb';
-import type { FacebookAccount } from '@/lib/fb';
+
 import { useFacebookStore } from '@/stores/fb';
+import type {FacebookAccount} from "../../../common/env";
 
 const facebookStore = useFacebookStore();
 const facebookAccounts = ref([] as FacebookAccount[]);

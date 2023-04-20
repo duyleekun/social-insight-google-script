@@ -26,14 +26,19 @@ const router = createRouter({
           component: () => import('@/views/FacebookPageView.vue'),
           children: [
             {
-              path: 'page-insight',
+              path: 'page',
               name: 'facebook-page-insight',
               component: () => import('@/views/FacebookPageInsightView.vue'),
             },
             {
-              path: 'page-content',
-              name: 'facebook-page-content',
-              component: () => import('@/views/FacebookPageContentView.vue'),
+              path: 'video',
+              name: 'facebook-page-video-insight',
+              component: () => import('@/views/FacebookPageVideosInsightView.vue'),
+            },
+            {
+              path: 'reel',
+              name: 'facebook-page-reel-insight',
+              component: () => import('@/views/FacebookPageReelsInsightView.vue'),
             },
           ],
         },
