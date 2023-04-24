@@ -13,7 +13,7 @@ const props = defineProps<{
   selectedFacebookAccounts: FacebookAccount[];
 }>();
 
-const limit = ref(100)
+const limit = ref(7)
 
 async function writeAllToSheet() {
   return new Promise((resolve, reject)=> {

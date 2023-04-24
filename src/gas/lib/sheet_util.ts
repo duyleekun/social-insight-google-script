@@ -1,4 +1,6 @@
 export function writeToSheet(sheetName, data: any[]) {
+    toastMessage("Before write", sheetName, data.length);
+
     const headersSet = new Set<string>()
 
     let spreadSheet = SpreadsheetApp.getActiveSpreadsheet()
@@ -8,7 +10,7 @@ export function writeToSheet(sheetName, data: any[]) {
     }
     sheet.clearContents();
     sheet.clear()
-    console.log('data.length', data.length)
+
     if (data.length == 0) {
         return
     }
@@ -36,6 +38,7 @@ export function writeToSheet(sheetName, data: any[]) {
     console.log('before range.createFilter()')
     range.createFilter();
     console.log('end range.createFilter()')
+    toastMessage("Write finished", sheetName, data.length);
     // for (const col in headers) {
     //     console.log('${sheetName}.${headers[col]}', `${sheetName}.${headers[col]}`)
     //     console.log('headers[col].split(\'.\').length <= 1', headers[col].split('.').length <= 1)
@@ -47,4 +50,8 @@ export function writeToSheet(sheetName, data: any[]) {
     //         }
     //     }
     // }
+}
+
+export function toastMessage(...messages) {
+    SpreadsheetApp.getActive().toast(messages.join(" "));
 }

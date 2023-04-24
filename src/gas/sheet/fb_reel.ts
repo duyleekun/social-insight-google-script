@@ -1,7 +1,7 @@
 import {FacebookAccount, FacebookDataResponse, FacebookVideoWithLifetimeInsights, SingleLevelInsight} from '../../common/env';
 import {fetchJson} from '@/lib/api';
 import {flattenObject, mapToArray} from '@/lib/object_util';
-import {writeToSheet} from '@/lib/sheet_util';
+import {toastMessage, writeToSheet} from '@/lib/sheet_util';
 
 
 const fields = [
@@ -34,15 +34,17 @@ const fields = [
 ]
 
 
-function getFacebookVideosWithLifetimeInsights(facebookAccount: FacebookAccount, limit = 50) {
+function getFacebookVideosWithLifetimeInsights(facebookAccount: FacebookAccount, datePageLimit) {
     console.log('writeFacebookPagesInsights', arguments);
-    const videos = [];
+    const videos : FacebookVideoWithLifetimeInsights[] = [];
     const accessToken = facebookAccount.access_token;
-    let pageableUrl = `https://graph.facebook.com/v16.0/me/video_reels?fields=${encodeURIComponent(fields.join(','))}&limit=${limit}`;
+    let pageableUrl = `https://graph.facebook.com/v16.0/me/video_reels?fields=${encodeURIComponent(fields.join(','))}&limit=50`;
     let page = 0;
     let count = 0;
+    let datePage = 0;
     do {
-        console.log(facebookAccount.name, 'page', ++page);
+        console.log(facebookAccount.name, 'page', ++page,'datePage', datePage);
+        toastMessage(facebookAccount.name, 'page', ++page,'datePage', datePage);
         const {data, paging} = fetchJson({
             url: pageableUrl,
             headers: {Authorization: `Bearer ${accessToken}`},
@@ -51,8 +53,9 @@ function getFacebookVideosWithLifetimeInsights(facebookAccount: FacebookAccount,
         videos.push(...data)
         pageableUrl = paging && paging.next;
         count += data.length
+        datePage = (new Date().getTime() - new Date(data[data.length-1].created_time).getTime())/(1000*60*60*24);
     }
-    while (pageableUrl && count < limit);
+    while (pageableUrl && datePage <= datePageLimit);
     return videos;
 }
 
@@ -82,7 +85,7 @@ function processForSingleAndMultiLevelMetric(data: FacebookVideoWithLifetimeInsi
     return out
 }
 
-export function writeFacebookReelsWithLifetimeInsights(facebookAccounts: FacebookAccount[], limit = 2) {
+export function writeFacebookReelsWithLifetimeInsights(facebookAccounts: FacebookAccount[], limit) {
     const facebookPostsWithLifetimeInsights = facebookAccounts.map(facebookAccount => {
         return getFacebookVideosWithLifetimeInsights(facebookAccount, limit);
     }).flat()

@@ -1,7 +1,7 @@
 import {FacebookAccount, FacebookDataResponse, FacebookVideoWithLifetimeInsights, MultiLevelInsight, SingleLevelInsight} from '../../common/env';
 import {fetchJson} from '@/lib/api';
 import {flattenObject, mapToArray} from '@/lib/object_util';
-import {writeToSheet} from '@/lib/sheet_util';
+import {toastMessage, writeToSheet} from '@/lib/sheet_util';
 
 const lifetime_video_metric = [
     'total_video_views',
@@ -15,9 +15,12 @@ const lifetime_video_metric = [
     // 'total_video_views_sound_on',
     'total_video_views_by_distribution_type',
     'total_video_view_time_by_distribution_type',
-    'total_video_view_time_by_country_id',
-    'total_video_view_time_by_region_id',
-    'total_video_view_time_by_age_bucket_and_gender',
+
+    //TODO: NOT USED IN LOOKER YET
+    // 'total_video_view_time_by_country_id',
+    // 'total_video_view_time_by_region_id',
+    // 'total_video_view_time_by_age_bucket_and_gender',
+
     'total_video_play_count',
     'total_video_consumption_rate',
     'total_video_complete_views',
@@ -46,11 +49,14 @@ const lifetime_video_metric = [
     // 'total_video_10s_views_paid',
     // 'total_video_10s_views_sound_on',
     'total_video_15s_views',
-    'total_video_retention_graph',
-    'total_video_retention_graph_autoplayed',
-    'total_video_retention_graph_clicked_to_play',
-    'total_video_retention_graph_gender_male',
-    'total_video_retention_graph_gender_female',
+
+    //TODO: NOT USED IN LOOKER YET
+    // 'total_video_retention_graph',
+    // 'total_video_retention_graph_autoplayed',
+    // 'total_video_retention_graph_clicked_to_play',
+    // 'total_video_retention_graph_gender_male',
+    // 'total_video_retention_graph_gender_female',
+
     'total_video_avg_time_watched',
     'total_video_view_total_time',
     // 'total_video_view_total_time_organic',
@@ -105,15 +111,17 @@ const fields = [
 ]
 
 
-function getFacebookVideosWithLifetimeInsights(facebookAccount: FacebookAccount, limit = 50) {
+function getFacebookVideosWithLifetimeInsights(facebookAccount: FacebookAccount, datePageLimit) {
     console.log('writeFacebookPagesInsights', arguments);
-    const videos = [];
+    const videos = [] as FacebookVideoWithLifetimeInsights[];
     const accessToken = facebookAccount.access_token;
-    let pageableUrl = `https://graph.facebook.com/v16.0/me/indexed_videos?fields=${encodeURIComponent(fields.join(','))}&limit=${limit}`;
+    let pageableUrl = `https://graph.facebook.com/v16.0/me/indexed_videos?fields=${encodeURIComponent(fields.join(','))}&limit=50`;
     let page = 0;
     let count = 0;
+    let datePage = 0;
     do {
-        console.log(facebookAccount.name, 'page', ++page);
+        console.log(facebookAccount.name, 'page', ++page,'datePage', datePage);
+        toastMessage(facebookAccount.name, 'page', ++page,'datePage', datePage);
         const {data, paging} = fetchJson({
             url: pageableUrl,
             headers: {Authorization: `Bearer ${accessToken}`},
@@ -122,8 +130,9 @@ function getFacebookVideosWithLifetimeInsights(facebookAccount: FacebookAccount,
         videos.push(...data)
         pageableUrl = paging && paging.next;
         count += data.length
+        datePage = (new Date().getTime() - new Date(data[data.length-1].created_time).getTime())/(1000*60*60*24);
     }
-    while (pageableUrl && count < limit);
+    while (pageableUrl && datePage <= datePageLimit);
     return videos;
 }
 
@@ -209,7 +218,7 @@ function processForSingleAndMultiLevelMetric(data: FacebookVideoWithLifetimeInsi
     return out
 }
 
-export function writeFacebookVideosWithLifetimeInsights(facebookAccounts: FacebookAccount[], limit = 2) {
+export function writeFacebookVideosWithLifetimeInsights(facebookAccounts: FacebookAccount[], limit) {
     const facebookPostsWithLifetimeInsights = facebookAccounts.map(facebookAccount => {
         return getFacebookVideosWithLifetimeInsights(facebookAccount, limit);
     }).flat()
